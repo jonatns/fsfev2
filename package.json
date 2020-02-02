@@ -1,0 +1,11 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Full Stack for Front-End Engineers, v2",
+  "main": "app.js",
+  "author": "jnavarrete",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
