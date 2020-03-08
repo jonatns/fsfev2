@@ -1,15 +1,20 @@
-const express = require('express');
+const http = require("http");
+const express = require("express");
+const { Server: WebSocketServer } = require("ws");
+
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Nice work, Jonathan!');
+const wss = new WebSocketServer({ port: 40510 });
+
+wss.on("connection", function(ws) {
+  ws.on("message", function(message) {
+    ws.send(message);
+  });
 });
 
-app.get('/demo', (req, res) => {
-  res.set('X-Full-Stack', '4-life');
-  res.status(418);
-  res.send('I prefer coffee');
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/chat.html");
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
