@@ -13,7 +13,13 @@
     <ul id="message-list"></ul>
 
     <script>
-      var ws = new WebSocket("ws://localhost:40510");
+      let ws;
+
+      if (["localhost", "127.0.0.1", ""].includes(location.hostname)) {
+        ws = new WebSocket(`ws://localhost:3000`);
+      } else {
+        ws = new WebSocket(`wss://jonatns.best`);
+      }
 
       ws.onmessage = function(ev) {
         const li = document.createElement("li");

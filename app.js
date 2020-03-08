@@ -1,11 +1,15 @@
-const http = require("http");
 const express = require("express");
-const { Server: WebSocketServer } = require("ws");
-
+const path = require("path");
 const app = express();
+
+const WebSocketServer = require("ws").Server;
+const server = require("http").createServer(app);
+const wss = new WebSocketServer({ server });
 const port = 3000;
 
-const wss = new WebSocketServer({ port: 40510 });
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname + "/index.html"));
+});
 
 wss.on("connection", function(ws) {
   ws.on("message", function(message) {
@@ -13,8 +17,4 @@ wss.on("connection", function(ws) {
   });
 });
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/chat.html");
-});
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+server.listen(port, () => console.log(`App listening on port ${port}!`));
